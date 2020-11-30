@@ -13,14 +13,14 @@
 }
 
 .product:hover {
-    border:1px solid black;
+    border:1px solid #ff914d;
     transform:scale(1.02);
     transition-timing-function: ease;
     transition:0.5s;
 }
 
 .product > img {
-    max-height:200px;
+    max-height:250px;
     width:100%;
     object-fit: contain;
     margin-bottom:15px;
@@ -30,6 +30,7 @@
     height:100px;
     margin-bottom:15px;
     width: 100%;
+    
 }
 
 .product__price {
@@ -41,9 +42,14 @@
     border:1px solid;
     margin-top:10px;
     color:#111;
+    padding:10px;
+    font-size:18px;
 
 }
 
+.product__rating {
+    color:#ff914d;
+}
 @media screen and (max-width:800px) {
     .product__info {
         height:auto;

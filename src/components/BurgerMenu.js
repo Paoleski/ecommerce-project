@@ -1,11 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { auth } from '../firebase'
 import '../styles/burgerMenu.css'
 import { useStateValue } from './StateProvider'
 
 function BurgerMenu() {
     const [{user, menu}, dispatch] = useStateValue()
+    const history = useHistory()
     const style = { visibility: menu ? 'visible' : 'hidden' }
    
 
@@ -36,12 +37,12 @@ function BurgerMenu() {
         <div onClick={closeMenu} style={OVERLAY_STYLES} className="burgerMenu__container">
                 <div style={style} className="burgerMenu">
                     <div className="burgerMenu__list">
-                        <Link to='/'>
-                            <p>Home</p>
-                        </Link>
-                        <Link to='/checkout'>
-                            <p>Cart</p>
-                        </Link>
+                        <div>
+                            <button onClick={e => history.push('/')} className="burgerMenu__button">Home</button>
+                        </div>
+                        <div>
+                            <button onClick={e => history.push('/')} className="burgerMenu__button">Cart/Basket</button>
+                        </div>
                         <Link to={user ? '/' : '/login'}>
                             <button className="burgerMenu__button" onClick={handleAuthentication}>{user ? 'Sign Out' : 'Sign in' }</button>
                         </Link>

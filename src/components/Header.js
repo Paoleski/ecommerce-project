@@ -5,7 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import MenuIcon from '@material-ui/icons/Menu';
 import logo from '../img/LOGO-AGOEFILO.PNG';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useStateValue } from './StateProvider';
 import { auth } from '../firebase';
 import BurgerMenu from './BurgerMenu';
@@ -13,6 +13,7 @@ import BurgerMenu from './BurgerMenu';
 
 function Header() {
   const [{basket, user}, dispatch] = useStateValue()
+  const history = useHistory()
 
   const handleAuthentication = () => {
     if (user) {
@@ -29,9 +30,7 @@ function Header() {
   
   return (
     <div className="header">
-          <Link to="/">
-                <img className="header__logo" src={logo} alt="s" />
-          </Link>
+                <img onClick={e => history.push('/')} className="header__logo" src={logo} alt="s" />
       <div className="header__search">
         <input className="header__searchInput" type="text" />
         <SearchIcon className="header__searchIcon"></SearchIcon>

@@ -3,11 +3,13 @@
   padding:0;
 }
 
-a {
-  text-decoration: none;
-  color:inherit;
+html, body {
+  width:100% !important;
 }
 
+a {
+  text-decoration: none;
+}
 
 body {
   background-color:rgb(234,237,237);
