@@ -20,20 +20,6 @@ function Login() {
             .catch(error => alert(error.message))
         //firebase login
     }
-
-    const register = (e) => {
-        e.preventDefault()
-
-        auth.createUserWithEmailAndPassword(email, password)
-            .then((auth) => {
-                console.log(auth)
-                if (auth) {
-                    history.push('/')
-                }
-            })
-            .catch(error => alert(error.message))
-        //firebase register
-    }
     
     return (
         <div className='login'>
@@ -56,7 +42,9 @@ function Login() {
 
                 <p>By signing-in you agree to the Paoleski Abortion Clinics Operatives & Deixe Seu Feto Feliz - tm</p>
 
-                <button onClick={register} className="login__registerButton">Create your account</button>
+                {/* <button onClick={(e) => history.push('/createaccount')} className="login__registerButton">Create your account</button>
+                 */}
+                 <button onClick={() => history.push('/createaccount')} className="login__registerButton"> create account</button>
             </div>
         </div>
     )

@@ -15,14 +15,14 @@ function Home() {
       <div className="home__container">
         <div className="home__row">
           <Product
-            id={generateId()}
+            id={1}
             title="the bolsa vermelha"
             price={150}
             image={bolsa1}
             rating={4}
           />
           <Product
-            id={generateId()}
+            id={2}
             title="the bolsa sem cor"
             price={200}
             image={bolsa2}

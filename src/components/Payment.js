@@ -6,58 +6,82 @@ import '../styles/payment.css';
 import CheckoutProduct from './CheckoutProduct';
 import { getBasketTotal } from './reducer';
 import { useStateValue } from './StateProvider';
-import axios from 'axios'
+import axios from '../utils/axios';
+import { db } from '../firebase';
 
 function Payment() {
-  const [{ basket, user }, dispatch] = useStateValue()
+  const [{ basket, user, profile }, dispatch] = useStateValue();
 
-  const history = useHistory()
-  const stripe = useStripe()
-  const elements = useElements()
+  const history = useHistory();
+  const stripe = useStripe();
+  const elements = useElements();
 
-  const [error, setError] = useState(null)
-  const [disabled, setDisabled] = useState(true)
-  const [processing, setProcessing] = useState('')
-  const [succeeded, setSucceeded] = useState(false)
-  const [clientSecret, setClientSecret] = useState('')
+  const [error, setError] = useState('');
+  const [disabled, setDisabled] = useState(true);
+  const [processing, setProcessing] = useState('');
+  const [succeeded, setSucceeded] = useState(false);
+  const [clientSecret, setClientSecret] = useState(true);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   const getClientSecret = async () => {
+  //     const response = await axios({
+  //       method: 'post',
+  //       // strip expects the total in currencies subunits (use full cents 10$ === 10000)
+  //       url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
+  //     });
+  //     setClientSecret(response.data.clientSecret);
+  //   };
 
-    const getClientSecret = async () => {
-        const response = await axios({
-            method:'POST',
-            // strip expects the total in currencies subunits (use full cents 10$ === 10000)
-            url:`/payments/create?total=${getBasketTotal(basket) * 100}`
-        })
-        setClientSecret(response.data.clientSecret)
-    }
+  //   getClientSecret();
+  // }, [basket]);
 
-    getClientSecret()
-  }, [basket])
-
-
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     // fancy stripe stuff
-    event.preventDefault()
-    setProcessing(true)
+    event.preventDefault();
+    setProcessing(true);
+    const response = await axios({
+      method: 'post',
+      // strip expects the total in currencies subunits (use full cents 10$ === 10000)
+      url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
+    });
+    // eslint-disable-next-line no-unused-vars
+    const payload = await stripe
+      .confirmCardPayment(response.data.clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+        },
+      })
+      .then(({ paymentIntent }) => {
+        // paymentIntent = payment confirmation
+        db.collection('users')
+          .doc(user?.uid)
+          .collection('orders')
+          .doc(paymentIntent.id)
+          .set({
+            basket: basket,
+            amount: paymentIntent.amount,
+            created: paymentIntent.created,
+          }).catch(error => console.log(error))
 
-    const payload = await stripe.confirmCardPayment(clientSecret, {
-        payment_method:{
-            card: elements.getElement(CardElement)
-        }
-    }).then(({ paymentIntent }) => {
-        setSucceeded(true)
-        setError(null)
-        setProcessing(false)
+        setSucceeded(true);
+        setError(null);
+        setProcessing(false);
+        dispatch({
+          type: 'EMPTY_BASKET',
+        });
 
-        history.replace('/orders')
-    }) 
+        history.replace('/orders');
+      });
   };
 
   const handleChange = (event) => {
     // listen for changes in the cardElement and display errors as the customer type card details
-    setDisabled(event.empty);
     setError(event.error ? event.error.message : '');
+    if (event.empty || !event.complete || !clientSecret) {
+      setDisabled(true)
+    } else {
+      setDisabled(false)
+    }
   };
 
   return (
@@ -67,17 +91,7 @@ function Payment() {
           Checkout (<Link to="/checkout">{basket?.length} items</Link>)
         </h1>
 
-        <div className="payment__section">
-          {/* payment section -- delivery address */}
-          <div className="payment__title">
-            <h3>delivery address</h3>
-          </div>
-          <div className="payment__address">
-            <p>{user?.email}</p>
-            <p>123 React Lane</p>
-            <p>Los Angeles, CA</p>
-          </div>
-        </div>
+        <div className="payment__section"></div>
         <div className="payment__part2">
           {/* payment section -- review Items */}
           <div className="payment__title">
@@ -86,7 +100,7 @@ function Payment() {
           <div className="payment__items">
             {basket.map((item) => (
               <CheckoutProduct
-                key={item.id + (Math.random() * 1000000).toFixed(0)}
+                key={item.id + (Math.random() * 10).toFixed(0)}
                 id={item.id}
                 title={item.title}
                 image={item.image}
@@ -102,11 +116,26 @@ function Payment() {
 
           <div className="payment__title">
             <h3>Payment Method</h3>
+            {/* payment section -- delivery address */}
+            <div className="payment__address__container">
+              <h3>Delivery address</h3>
+              <p>Address: {profile?.address}</p>
+              <p>Zip code: {profile?.zipCode}</p>
+              <p>
+                {profile?.city}, {profile?.stateUF}
+              </p>
+            </div>
           </div>
           <div className="payment__details">
             {/* stripe magic will go here */}
             <form onSubmit={handleSubmit}>
-              <CardElement onChange={handleChange} />
+              <div className="payment__cardElementContainer">
+                <CardElement
+                  onChange={handleChange}
+                  options={cardElementOptions}
+                />
+                  {error && <div>{error}</div>}
+              </div>
 
               <div className="payment__priceContainer">
                 <CurrencyFormat
@@ -124,12 +153,11 @@ function Payment() {
                   thousandSeparator={true}
                   prefix={'$'}
                 />
-
-                <button disabled={processing || disabled || succeeded}>
-                    <span>{processing ? <p>Processing</p> : "Buy Now" }</span>
+            
+                <button className="payment__buyNowButton" disabled={processing || disabled || succeeded}>
+                  <span>{processing ? <p>Processing</p> : 'Buy Now'}</span>
                 </button>
               </div>
-              {error && <div>{error}</div>}
             </form>
           </div>
         </div>
@@ -138,4 +166,20 @@ function Payment() {
   );
 }
 
+const cardElementOptions = {
+  // injecting css styles to card element(iframe)
+  style: {
+    base: {
+      color: 'black',
+      fontSize: '25px',
+      '::placeholder': {
+        color: 'black',
+      },
+    },
+    complete: {
+      color: 'green',
+    },
+  },
+  hidePostalCode:true,
+};
 export default Payment;

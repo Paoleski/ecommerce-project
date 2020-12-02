@@ -30,7 +30,7 @@ function Header() {
   
   return (
     <div className="header">
-                <img onClick={e => history.push('/')} className="header__logo" src={logo} alt="s" />
+          <img onClick={e => history.push('/')} className="header__logo" src={logo} alt="s" />
       <div className="header__search">
         <input className="header__searchInput" type="text" />
         <SearchIcon className="header__searchIcon"></SearchIcon>
@@ -39,8 +39,16 @@ function Header() {
       <div className="header__nav">
         <Link to={!user ? '/login' : '/'}>
             <div onClick={handleAuthentication} className="header__option header__userGreetings">
-              <span className="header__optionLineOne ">Hello {user ?  user.email : 'Guest'}</span>
+              {/* can't get displayName on first login/creating */}
+              <span className="header__optionLineOne ">Hello {user ?  user?.displayName || user?.email : 'Guest'}</span> 
               <span className="header__optionLineTwo">{user ? 'Sign out' : 'Sign in' }</span>
+            </div>
+        </Link>
+
+        <Link to='/orders'>
+            <div className="header__option header__userGreetings">
+              <span className="header__optionLineOne ">Returns &</span>
+              <span className="header__optionLineTwo">Orders</span>
             </div>
         </Link>
 

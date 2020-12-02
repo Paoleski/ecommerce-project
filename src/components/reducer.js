@@ -1,51 +1,83 @@
+import { db } from '../firebase';
+
 export const initialState = {
-    basket:[],
-    user:null,
-    menu:false
-}
+  basket: [],
+  user: null,
+  profile: [],
+  menu: false,
+};
 
 //selector
 export const getBasketTotal = (basket) => {
-    return basket?.reduce((amount, item) => item.price + amount, 0)
-}
+  return basket?.reduce((amount, item) => item.price + amount, 0);
+};
 
 const reducer = (state, action) => {
-    switch(action.type) {
-        case 'ADD_TO_BASKET':
-            return {
-                ...state,
-                basket:[...state.basket, action.item]
-            }
+  switch (action.type) {
+    case 'ADD_TO_BASKET':
 
-        case 'REMOVE_FROM_BASKET':
-            const index = state.basket.findIndex((basketItem) => basketItem.id === action.id)
-            let newBasket = [...state.basket]
+      if (action.user) {
+        db.collection('users')
+            .doc(action.user.uid)
+            .collection('basket')
+            .doc(action.user.uid)
+            .set({ basket: [...state.basket, action.item] });
+      }
 
-            if (index >= 0) {
-                newBasket.splice(index, 1)
-            } else {
-                console.warn(`Cant remove product (id: ${action.id}) as its not in the basket`)
-            }
-            return {
-                ...state,
-                basket: newBasket
-            }
+      return {
+        ...state,
+        basket: [...state.basket, action.item],
+      };
 
-        case 'SET_USER':
-            return {
-                ...state,
-                user:action.user
-            }
+    case 'REMOVE_FROM_BASKET':
+      const index = state.basket.findIndex(
+        (basketItem) => basketItem.id === action.id
+      );
+      let newBasket = [...state.basket];
 
-        case 'SET_MENU':
-            return {
-                ...state,
-                menu:action.menu
-            }
-            
-        default:
-            return state
-    }
-}
+      if (index >= 0) {
+        newBasket.splice(index, 1);
+      } else {
+        console.warn(
+          `Cant remove product (id: ${action.id}) as its not in the basket`
+        );
+      }
+      if (action.user) {
+      db.collection('users')
+        .doc(action.user.uid)
+        .collection('basket')
+        .doc(action.user.uid)
+        .set({ basket: newBasket });
+      }
 
-export default reducer
+      return {
+        ...state,
+        basket: newBasket,
+      };
+
+    case 'SET_USER':
+      return {
+        ...state,
+        user: action.user,
+        profile: action.profile,
+        basket: action.basket,
+      };
+
+    case 'SET_MENU':
+      return {
+        ...state,
+        menu: action.menu,
+      };
+
+    case 'EMPTY_BASKET':
+      return {
+        ...state,
+        basket: [],
+      };
+
+    default:
+      return state;
+  }
+};
+
+export default reducer;

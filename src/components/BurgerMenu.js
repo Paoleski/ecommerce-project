@@ -41,7 +41,10 @@ function BurgerMenu() {
                             <button onClick={e => history.push('/')} className="burgerMenu__button">Home</button>
                         </div>
                         <div>
-                            <button onClick={e => history.push('/')} className="burgerMenu__button">Cart/Basket</button>
+                            <button onClick={e => history.push('/checkout')} className="burgerMenu__button">Cart/Basket</button>
+                        </div>
+                        <div>
+                            <button onClick={e => history.push('/orders')} className="burgerMenu__button">Orders</button>
                         </div>
                         <Link to={user ? '/' : '/login'}>
                             <button className="burgerMenu__button" onClick={handleAuthentication}>{user ? 'Sign Out' : 'Sign in' }</button>

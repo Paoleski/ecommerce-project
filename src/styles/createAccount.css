@@ -1,0 +1,133 @@
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #fff9f4 inset;
+}
+
+.createAccount {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    min-height:100vh;
+    background-color: #fff9f4;
+    min-width:100vw;
+}
+
+.createAccount__logo {
+    object-fit: contain;
+    width: 200px;
+    height:150px;
+    margin-top:10px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.createAccount__container {
+    width:40%;
+    height:fit-content;
+    display:flex;
+    flex-direction: column;
+    border-radius:5px;
+    border:1px solid lightgray;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+.createAccount__container > form > h1 {
+    font-weight:500;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.createAccount__container > form > h5 {
+    margin-bottom:5px;
+}
+
+.createAccount__container > form > input {
+    height:30px;
+    margin-bottom:10px;
+    padding-left:5px;
+    background-color: #fff9f4;
+    width:98%;
+    margin-top:5px;
+}
+
+.createAccount__container > p {
+    font-size:12px;
+    margin-top:15px;
+}
+
+.createAccount__registerButton {
+    height:30px;
+    border:1px solid;
+    border-radius:2px;
+    background-color: #ff914d;
+    width:100%;
+    height:30px;
+    margin-top:15px;
+}
+
+.createAccount__address {
+    display:flex;
+    justify-content: space-between;
+    flex-wrap:wrap;
+    width:98%;
+}
+
+.createAccount__addressInput > input {
+    height:30px;
+    margin-bottom:10px;
+    padding-left:5px;
+    margin-top:5px;
+    background-color: #fff9f4;
+    width:100%;
+}
+
+.createAccount__zipCode > input {
+    height:30px;
+    margin-bottom:10px;
+    padding-left:5px;
+    margin-top:5px;
+    background-color: #fff9f4;
+    width:100%;
+}
+
+.createAccount__city > input {
+    height:30px;
+    margin-bottom:10px;
+    margin-top:5px;
+    padding-left:5px;
+    background-color: #fff9f4;
+    width:100%;
+}
+
+.createAccount__state > input {
+    height:30px;
+    margin-bottom:10px;
+    margin-top:5px;
+    padding-left:5px;
+    background-color: #fff9f4;
+    width:100%;
+}
+
+.createAccount__addressInput {
+    width:48%;
+}
+
+.createAccount__zipCode {
+    width:48%;
+}
+
+
+.createAccount__city {
+    width:48%;
+}
+
+.createAccount__state {
+    width:48%;
+}
+
+
+@media screen and (max-width:800px) {
+    .createAccount__container {
+        width:80%;
+    }
+}

@@ -2,28 +2,27 @@
     top:0;
     right:0;
     position:fixed;
-    background-color: #fff9f4;
+    background-color:#ff914d;
     height:100%;
-    width:30%;
+    width:40%;
     display:flex;
     z-index:1;
+    text-align: center;
 }
 
 
 .burgerMenu__list {
     margin-top:80px;
-    list-style: none;
     width:100%;
     font-size:18px;
-    text-align: center;
     padding:20px;
 }
 
 
 .burgerMenu__button {
-    background-color: #fff9f4;
-    color: #ff914d;
+    background-color: #ff914d;
+    color: #fff9f4;
     border:none;
-    font-size:20px;
+    font-size:16px;
     padding:10px;
 }

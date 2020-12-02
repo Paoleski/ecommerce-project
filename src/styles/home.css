@@ -2,8 +2,9 @@
     display:flex;
     justify-content: center;
     max-width: 1500px;
-    width:90%;
+    width:85%;
     margin:0 auto;
+    margin-bottom:50px;
 }
 
 .home__container {

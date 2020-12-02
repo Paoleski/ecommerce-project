@@ -51,7 +51,6 @@
   justify-content: space-evenly;
   align-items: center;
   margin-right:10px;
-
 }
 
 .header__option {
@@ -79,7 +78,7 @@
     align-items: center;
     color:#ff914d;
     margin-right:20px;
-    margin-left:10px;
+    margin-left:20px;
 }
 
 .header__basketCount {
