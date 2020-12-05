@@ -1,14 +1,31 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useState, Component } from 'react';
 import StarRateIcon from '@material-ui/icons/StarRate';
 import {  useHistory } from 'react-router-dom';
 import '../styles/product.css';
 import { useStateValue } from './StateProvider';
-import { db } from '../firebase';
+import AwesomeSlider from 'react-awesome-slider';
+import awesomeCss from '../styles/awesome.css'
+
+// import customAwesome from '../styles/awesome.css'
+// import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fold-out-animation/fold-out-animation.scss'
+
+
 
 function Product({ id, title, image, price, rating }) {
   const [{ user, basket }, dispatch] = useStateValue();
   const history = useHistory()
+
+  const handleIsOpen = () => {
+    dispatch({
+      type:'ADD_IMAGE',
+      image:image[0]
+    })
+    dispatch({
+      type:'SET_FULLSCREEN',
+      fullscreen:true
+    })
+  }
 
   const addToBasket = () => {
     if (user) {
@@ -28,7 +45,6 @@ function Product({ id, title, image, price, rating }) {
     }
   };
 
-  console.log(basket)
   return (
     <div className="product">
       <div className="product__info">
@@ -45,8 +61,11 @@ function Product({ id, title, image, price, rating }) {
             ))}
         </div>
       </div>
-
-      <img src={image} alt="" />
+      <div className="product__image">
+        <AwesomeSlider cssModule={awesomeCss} bullets={false}>
+          {image.map(image => <div onClick={handleIsOpen} data-src={image}/>)}
+        </AwesomeSlider>
+      </div>
       <button onClick={addToBasket}>add to basket</button>
     </div>
   );

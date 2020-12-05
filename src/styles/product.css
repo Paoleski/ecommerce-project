@@ -8,22 +8,28 @@
     padding:20px;
     width:100%;
     min-width: 100px;
-    max-height:400px;
+    /* max-height:400px; */
     z-index:1;
 }
 
 .product:hover {
     border:1px solid #ff914d;
-    transform:scale(1.02);
+    transform:scale(1.01);
     transition-timing-function: ease;
-    transition:0.5s;
+    transition:0.1s;
 }
 
-.product > img {
+
+
+.product__image > img {
     max-height:250px;
     width:100%;
     object-fit: contain;
     margin-bottom:15px;
+}
+
+.product__image {
+    width:100%;
 }
 
 .product__info {
@@ -50,6 +56,15 @@
 .product__rating {
     color:#ff914d;
 }
+
+.product__awesomeSlider {
+    border:1px solid black;
+    --loader-bar-color:green;
+}
+
+
+
+
 @media screen and (max-width:800px) {
     .product__info {
         height:auto;

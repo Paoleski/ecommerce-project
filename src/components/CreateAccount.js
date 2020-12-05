@@ -12,13 +12,15 @@ function CreateAccount() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [zipCode, setZipCode] = useState('');
-  const [address, setAddress] = useState('');
+  const [street, setStreet] = useState('');
   const [stateUF, setStateUF] = useState('');
   const [city, setCity] = useState('');
 
   const handleAccountCreation = (e) => {
     e.preventDefault();
+    const profile = {fullName, email, street, zipCode, city, stateUF, phoneNumber}
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((authUser) => {
@@ -26,16 +28,25 @@ function CreateAccount() {
           const displayName = fullName.split(' ')[0];
           auth.currentUser.updateProfile({ displayName });
           dispatch({
-            type: 'SET_USER',
+            type: 'CREATE_USER',
             user: authUser,
-            profile:fullName
+            profile:profile,
+            basket:[],
           });
         }
       })
       .then(() => {
         db.collection('users')
           .doc(auth.currentUser.uid)
-          .set({ fullName, address, zipCode, city, stateUF });
+          .collection('profile')
+          .doc(auth.currentUser.uid)
+          .set({ fullName, email, street, zipCode, city, stateUF, phoneNumber });
+
+          db.collection('users')
+          .doc(auth.currentUser.uid)
+          .collection('basket')
+          .doc(auth.currentUser.uid)
+          .set({ basket:[] });
         history.push('/');
       })
       .catch((error) => alert(error.message));
@@ -74,13 +85,20 @@ function CreateAccount() {
             onChange={(e) => setFullName(e.target.value)}
           />
 
+          <h5>Phone number</h5>
+          <input
+            type="text"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+
           <div className="createAccount__address">
             <div className="createAccount__addressInput">
-              <h5>Address</h5>
+              <h5>Street</h5>
               <input
                 type="text"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                value={street}
+                onChange={(e) => setStreet(e.target.value)}
               />
             </div>
 

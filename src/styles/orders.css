@@ -5,3 +5,23 @@
 .orders h1 {
     margin:30px 0;
 }
+
+@media screen and (max-width:800px) {
+    .orders {
+        padding:0;
+    }
+
+    .orders h1 {
+        margin:0;
+        margin-top:10px;
+        margin-left:10px;
+        padding:10px;
+    }
+
+    .orders__order {
+        display:flex;
+        flex-direction: column;
+        margin:0 auto;
+        width:90%;
+    }
+}

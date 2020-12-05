@@ -1,0 +1,31 @@
+.shipping {
+    display:flex;
+    flex-direction: column;
+    width:50%;
+    height:fit-content;
+    background-color:white;
+    margin:20px auto;
+    border:1px solid lightgray;
+    padding:5px;
+}
+
+.shipping > h3{
+   margin:5px;
+   text-align: center;
+}
+
+.shipping > button{
+    margin:5px;
+    background-color: orange;
+    padding:10px;
+    width:50%;
+    margin:0 auto;
+ }
+
+.shipping__rates {
+    display:flex;
+    width:90%;
+    margin:0 auto;
+    justify-content: space-around;
+    padding:5px;
+}

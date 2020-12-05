@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react';
 import '../styles/checkoutproduct.css';
 import StarRateIcon from '@material-ui/icons/StarRate';
 import { useStateValue } from './StateProvider';
-import { db } from '../firebase';
 
 const CheckoutProduct = forwardRef((props, ref) => {
   // eslint-disable-next-line no-unused-vars

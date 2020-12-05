@@ -12,17 +12,16 @@ import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import Orders from './components/Orders';
 import CreateAccount from './components/CreateAccount';
+import FullscreenImg from './components/FullscreenImg';
+import Shipping from './components/Shipping';
 
-const promise = loadStripe(
-  'pk_test_51Hsjo8CiY9aT1d2SXA9gTNRjABNMncgwWwnmhBBgZQaiRxkxfEvk5rWkOlWmD9zZSeIqTmQPEK4BFYxY4hpxB3Ug00h3gHGaAY'
-)
-
+const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 function App() {
   // eslint-disable-next-line no-unused-vars
   const [state, dispatch] = useStateValue();
 
   const getUserProfile = async (userUID) => {
-    const userProfile = await db.collection('users').doc(userUID).get()
+    const userProfile = await db.collection('users').doc(userUID).collection('profile').doc(userUID).get()
     return userProfile.data()
   }
 
@@ -34,7 +33,6 @@ function App() {
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-
       const getProfileData = async (authUser) => {
         const profileData = await getUserProfile(authUser.uid)
         const basketData = await getUserBasket(authUser.uid)
@@ -42,6 +40,7 @@ function App() {
       } 
 
       getProfileData(authUser).then(data => {
+        console.log(data)
         dispatch({
           type: 'SET_USER',
           user: authUser,
@@ -53,11 +52,13 @@ function App() {
         dispatch({
           type: 'SET_USER',
           user: null,
+          basket:[]
         });
       }
     });
   }, [dispatch]);
 
+  console.log(state)
 
   return (
     <Router>
@@ -65,6 +66,12 @@ function App() {
         <Switch>
           <Route path="/createaccount">
             <CreateAccount/>
+          </Route>
+          <Route path="/shipping">
+            <Shipping/>
+          </Route>
+          <Route path="/fullscreenimg">
+            <FullscreenImg/>
           </Route>
           <Route path="/login">
             <Login />

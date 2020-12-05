@@ -21,6 +21,10 @@ function Orders() {
                         id:doc.id,
                         data:doc.data()
                     })))
+                    dispatch({
+                        type:'SET_ORDERS',
+                        orders:orders
+                    })
                 })
             } else {
                 setOrders([])

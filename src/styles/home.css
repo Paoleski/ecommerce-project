@@ -2,7 +2,7 @@
     display:flex;
     justify-content: center;
     max-width: 1500px;
-    width:85%;
+    width:100%;
     margin:0 auto;
     margin-bottom:50px;
 }
@@ -13,10 +13,18 @@
     justify-content: center;
 }
 
+.home__headerImg {
+    width:100%;
+    margin-bottom:-30%;
+    z-index:-1;
+    mask-image:linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+}
+
 .home__row {
     display:flex;
     z-index:1;
 }
+
 
 /* .home__image {
     width:100%;

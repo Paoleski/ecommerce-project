@@ -1,0 +1,4 @@
+post http://localhost:5001/ecommerce-project-f0c3b/us-central1/api/getrate
+Content-Type:application/json
+Authorization:Bearer sand_tIQuKxpfLAXCREc2fGRySRtZlO6vKICGTQ2rK7X6skg=
+

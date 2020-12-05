@@ -56,7 +56,6 @@
 .header__option {
   display: flex;
   flex-direction: column;
-  color: white;
   margin-left: 10px;
   margin-right: 10px;
   text-align: center;
@@ -82,7 +81,7 @@
 }
 
 .header__basketCount {
-  padding:5px;
+  padding:7px;
 }
 
 .header__optionMenu {

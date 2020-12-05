@@ -5,6 +5,9 @@ export const initialState = {
   user: null,
   profile: [],
   menu: false,
+  fullscreen:false,
+  orders:[],
+  images:{},
 };
 
 //selector
@@ -15,13 +18,12 @@ export const getBasketTotal = (basket) => {
 const reducer = (state, action) => {
   switch (action.type) {
     case 'ADD_TO_BASKET':
-
       if (action.user) {
         db.collection('users')
-            .doc(action.user.uid)
-            .collection('basket')
-            .doc(action.user.uid)
-            .set({ basket: [...state.basket, action.item] });
+          .doc(action.user.uid)
+          .collection('basket')
+          .doc(action.user.uid)
+          .set({ basket: [...state.basket, action.item] });
       }
 
       return {
@@ -43,11 +45,11 @@ const reducer = (state, action) => {
         );
       }
       if (action.user) {
-      db.collection('users')
-        .doc(action.user.uid)
-        .collection('basket')
-        .doc(action.user.uid)
-        .set({ basket: newBasket });
+        db.collection('users')
+          .doc(action.user.uid)
+          .collection('basket')
+          .doc(action.user.uid)
+          .set({ basket: newBasket });
       }
 
       return {
@@ -63,13 +65,46 @@ const reducer = (state, action) => {
         basket: action.basket,
       };
 
+    case 'CREATE_USER':
+      return {
+        ...state,
+        user:action.user,
+        profile:action.profile,
+        basket:[],
+      }
+
     case 'SET_MENU':
       return {
         ...state,
         menu: action.menu,
       };
 
+    case 'ADD_IMAGE':
+      return {
+        ...state,
+        image:action.image,
+      }
+
+    case 'SET_ORDERS':
+      return {
+        ...state,
+        orders:action.orders,
+      }
+
+    case 'SET_FULLSCREEN':
+      return {
+        ...state,
+        fullscreen:action.fullscreen,
+      }
+
     case 'EMPTY_BASKET':
+      if (action.user) {
+        db.collection('users')
+          .doc(action.user.uid)
+          .collection('basket')
+          .doc(action.user.uid)
+          .set({ basket: [] });
+      }
       return {
         ...state,
         basket: [],

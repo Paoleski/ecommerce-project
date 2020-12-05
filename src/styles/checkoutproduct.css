@@ -1,14 +1,20 @@
 .checkoutProduct {
     display:flex;
-    margin-top:20px;
-    margin-bottom:20px;
     background-color: #fff9f4;
+    border:1px solid lightgray;
 }
 
 .checkoutProduct__info {
-    padding:20px;
+    padding:10px;
+    display: flex;
+    flex-direction: column;
+    margin:0 auto;
 }
 
+.checkoutProduct__rating {
+    color:#ff914d;
+    margin-top:10px;
+}
 .checkoutProduct__info > button {
     background-color: #ff914d;
     border:1px solid;
@@ -20,8 +26,8 @@
 .checkoutProduct__image {
     object-fit:contain;
     width:180px;
-    height:180px;
-    margin-left:30px;
+    height:100%;
+    padding:10px;
 }
 
 .checkoutProduct__title {
