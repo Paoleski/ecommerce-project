@@ -8,9 +8,10 @@ import { getBasketTotal } from './reducer';
 import { useStateValue } from './StateProvider';
 import axios from '../utils/axios';
 import { db } from '../firebase';
+import Shipping from './Shipping';
 
 function Payment() {
-  const [{ basket, user, profile }, dispatch] = useStateValue();
+  const [{ basket, user, profile, shippingRate }, dispatch] = useStateValue();
 
   const history = useHistory();
   const stripe = useStripe();
@@ -29,20 +30,16 @@ function Payment() {
       email: user?.email,
       address: {
         city: profile?.city,
-        line1: profile?.line1,
-        state: profile?.state,
+        country:'US',
+        line1: profile?.street,
+        state: profile?.stateUF,
         postal_code: profile?.zipCode,
       },
     };
     setProcessing(true);
-    // const response = await axios({
-    //   method: 'post',
-    //   // strip expects the total in currencies subunits (use full cents 10$ === 10000)
-    //   url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
-    // });
 
     const { data: clientSecret } = await axios.post('/payments/create', {
-      amount: getBasketTotal(basket) * 100,
+      amount: (getBasketTotal(basket) + Number(shippingRate)) * 100,
     });
 
     const paymentMethodReq = await stripe.createPaymentMethod({
@@ -54,17 +51,18 @@ function Payment() {
     const payload = await stripe.confirmCardPayment(clientSecret.clientSecret, {
       payment_method: paymentMethodReq.paymentMethod.id,
     });
+    console.log(paymentMethodReq)
 
-    console.log(payload);
-
-    db.collection('users')
-      .doc(user?.uid)
+    db
       .collection('orders')
       .doc(payload.paymentIntent.id)
       .set({
+        user:user.uid,
         basket: basket,
         amount: payload.paymentIntent.amount,
+        shippingRate:shippingRate,
         created: payload.paymentIntent.created,
+        billingDetails:billingDetails
       });
 
     setSucceeded(true);
@@ -77,23 +75,24 @@ function Payment() {
     });
 
     if (payload.paymentIntent.status === 'succeeded') {
-      console.log('sucess')
+      console.log('sucess');
       history.replace('/orders');
     } else {
-      alert('payment failed')
-      history.replace('/payment')
-    } 
+      alert('payment failed');
+      history.replace('/payment');
+    }
   };
 
   const handleChange = (event) => {
     // listen for changes in the cardElement and display errors as the customer type card details
     setError(event.error ? event.error.message : '');
-    if (event.empty || !event.complete) {
+    if (event.empty || !event.complete || !shippingRate) {
       setDisabled(true);
     } else {
       setDisabled(false);
     }
   };
+
 
   return (
     <div className="payment">
@@ -127,17 +126,41 @@ function Payment() {
           <div className="payment__title">
             <h3>Payment Method</h3>
             {/* payment section -- delivery address */}
+            <div className="payment__stripeSecurity">
+              <h3>Stripe payment:</h3>
+              <p>
+                "Anyone involved with the processing, transmission, or storage
+                of card data must comply with the Payment Card Industry Data
+                Security Standards (PCI DSS). Stripe has been audited by an
+                independent PCI Qualified Security Assessor (QSA) and is
+                certified as a PCI Level 1 Service Provider. This is the most
+                stringent level of certification available in the payments
+                industry."
+              </p>
+              <p>Stripe forces HTTPS for all services using TLS (SSL).</p>
+              <p>
+                Learn more
+                <a href="https://stripe.com/docs/security">
+                  {' '}
+                  stripe's documentation
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <div className="payment__details">
             <div className="payment__address__container">
               <h3>Delivery address</h3>
-              <p>Address: {profile?.address}</p>
+              <p>Address: {profile?.street}</p>
               <p>Zip code: {profile?.zipCode}</p>
               <p>
                 {profile?.city}, {profile?.stateUF}
               </p>
             </div>
-          </div>
-          <div className="payment__details">
+
+            <Shipping/>
             {/* stripe magic will go here */}
+            {shippingRate && 
             <form onSubmit={handleSubmit}>
               <div className="payment__cardElementContainer">
                 <CardElement
@@ -153,12 +176,12 @@ function Payment() {
                     <>
                       <p>
                         Order total ({basket.length} items):{' '}
-                        <strong>{value}</strong>
+                       {value} (shipping cost: {shippingRate})
                       </p>
                     </>
                   )}
                   decimalScale={2}
-                  value={getBasketTotal(basket)}
+                  value={getBasketTotal(basket) + Number(shippingRate)}
                   displayType={'text'}
                   thousandSeparator={true}
                   prefix={'$'}
@@ -172,6 +195,7 @@ function Payment() {
                 </button>
               </div>
             </form>
+            }
           </div>
         </div>
       </div>

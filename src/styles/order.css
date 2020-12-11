@@ -1,18 +1,28 @@
 .order {
-    padding:40px;
-    margin:20px 0;
-    border:1px solid lightgray;
-    background-color: #fff9f4;
-    position:relative;
+  padding: 40px;
+  margin: 20px 0;
+  border: 1px solid lightgray;
+  background-color: #fff9f4;
+  position: relative;
 }
 
 .order__id {
-    position:absolute;
-    top:40px;
-    right:20px;
+  position: absolute;
+  top: 40px;
+  right: 20px;
 }
 
 .order__total {
-    font-weight:500px;
-    text-align: right;
+  font-weight: 500px;
+  text-align: right;
+}
+
+@media screen and (max-width: 800px) {
+  .order {
+    padding: 20px;
+  }
+  
+  .order__id {
+      top:0;
+  }
 }

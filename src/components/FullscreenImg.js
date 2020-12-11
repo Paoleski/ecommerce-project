@@ -3,9 +3,8 @@ import '../styles/fullscreenImg.css';
 import { useStateValue } from './StateProvider';
 
 function FullscreenImg() {
-  const [{image, user, fullscreen}, dispatch] = useStateValue()
+  const [{image, fullscreen}, dispatch] = useStateValue()
   
-
   const closeFullScreen = () => {
     dispatch({
         type:'SET_FULLSCREEN',

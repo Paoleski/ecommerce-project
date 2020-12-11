@@ -14,6 +14,8 @@ import Orders from './components/Orders';
 import CreateAccount from './components/CreateAccount';
 import FullscreenImg from './components/FullscreenImg';
 import Shipping from './components/Shipping';
+import AdminPanel from './components/AdminPanel';
+import Footer from './components/Footer';
 
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 function App() {
@@ -33,6 +35,9 @@ function App() {
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
+      authUser.getIdTokenResult().then(idTokenResult => {
+        authUser.admin = idTokenResult.claims.admin
+      })
       const getProfileData = async (authUser) => {
         const profileData = await getUserProfile(authUser.uid)
         const basketData = await getUserBasket(authUser.uid)
@@ -67,6 +72,10 @@ function App() {
           <Route path="/createaccount">
             <CreateAccount/>
           </Route>
+          <Route path="/adminpanel">
+            <Header/>
+            <AdminPanel/>
+          </Route>
           <Route path="/shipping">
             <Shipping/>
           </Route>
@@ -93,6 +102,7 @@ function App() {
           <Route path="/">
             <Header />
             <Home />
+            <Footer/>
           </Route>
         </Switch>
       </div>

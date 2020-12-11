@@ -27,12 +27,19 @@ function Header() {
       menu:true
     })
   }
+
+  const handleKeyWord = (e) => {
+    dispatch({
+      type:'SET_KEYWORD',
+      keyword:e.target.value
+    })
+  }
   
   return (
     <div className="header">
           <img onClick={e => history.push('/')} className="header__logo" src={logo} alt="s" />
       <div className="header__search">
-        <input className="header__searchInput" type="text" />
+        <input className="header__searchInput" type="text" onChange={handleKeyWord}/>
         <SearchIcon className="header__searchIcon"></SearchIcon>
       </div>
       

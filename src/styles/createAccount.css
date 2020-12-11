@@ -1,5 +1,6 @@
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 30px #fff9f4 inset;
+    box-shadow:0 0 0 30px #fff9f4 inset;
 }
 
 .createAccount {
@@ -37,94 +38,110 @@ input:-webkit-autofill {
     text-align:center;
 }
 
-.createAccount__container > form > h5 {
-    margin-bottom:5px;
-}
+
 
 .createAccount__container > form > input {
     height:30px;
     margin-bottom:10px;
-    padding-left:5px;
     background-color: #fff9f4;
-    width:98%;
-    margin-top:5px;
+    width:100%;
+    margin-top:3px;
+    border-radius:4px;
+    border:1px solid black;
+    outline:none;
+    padding-left:5px;
 }
 
 .createAccount__container > p {
     font-size:12px;
-    margin-top:15px;
 }
+
+
+.createAccount__address {
+    display:flex;
+    justify-content: space-between;
+    width:100%;
+    margin-top:5px;
+    gap:15px;
+}
+
+.createAccount__city {
+    width:60%;
+}
+
+.createAccount__state {
+    width:10%;
+}
+
+.createAccount__zipCodeInput {
+    height:30px;
+    margin-bottom:10px;
+    background-color: #fff9f4;
+    width:100%;
+    margin-top:3px;
+    border-radius:4px;
+    border:1px solid black;
+    outline:none;
+    padding-left:5px;
+}
+
+.createAccount__cityInput {
+    height:30px;
+    margin-bottom:10px;
+    background-color: #fff9f4;
+    width:100%;
+    margin-top:3px;
+    border-radius:4px;
+    border:1px solid black;
+    outline:none;
+    padding-left:5px;
+}
+
+.createAccount__stateInput {
+    height:30px;
+    margin-bottom:10px;
+    background-color: #fff9f4;
+    width:100%;
+    margin-top:3px;
+    border-radius:4px;
+    border:1px solid black;
+    outline:none;
+    padding-left:5px;
+}
+
+/* .createAccount__city {
+    width:50%;
+}
+
+.createAccount__state {
+    width:20%;
+} */
+
+
+
+.createAccount__errors {
+    color:red;
+    width:fit-content;
+    margin:'0 auto';
+    margin-top:-10px;
+    margin-left:2px;
+    font-size:12px;
+}
+
 
 .createAccount__registerButton {
     height:30px;
     border:1px solid;
     border-radius:2px;
     background-color: #ff914d;
-    width:100%;
-    height:30px;
+    width:40%;
+    margin:0 auto;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height:40px;
     margin-top:15px;
 }
-
-.createAccount__address {
-    display:flex;
-    justify-content: space-between;
-    flex-wrap:wrap;
-    width:98%;
-}
-
-.createAccount__addressInput > input {
-    height:30px;
-    margin-bottom:10px;
-    padding-left:5px;
-    margin-top:5px;
-    background-color: #fff9f4;
-    width:100%;
-}
-
-.createAccount__zipCode > input {
-    height:30px;
-    margin-bottom:10px;
-    padding-left:5px;
-    margin-top:5px;
-    background-color: #fff9f4;
-    width:100%;
-}
-
-.createAccount__city > input {
-    height:30px;
-    margin-bottom:10px;
-    margin-top:5px;
-    padding-left:5px;
-    background-color: #fff9f4;
-    width:100%;
-}
-
-.createAccount__state > input {
-    height:30px;
-    margin-bottom:10px;
-    margin-top:5px;
-    padding-left:5px;
-    background-color: #fff9f4;
-    width:100%;
-}
-
-.createAccount__addressInput {
-    width:48%;
-}
-
-.createAccount__zipCode {
-    width:48%;
-}
-
-
-.createAccount__city {
-    width:48%;
-}
-
-.createAccount__state {
-    width:48%;
-}
-
 
 @media screen and (max-width:800px) {
     .createAccount__container {

@@ -8,11 +8,13 @@ export const initialState = {
   fullscreen:false,
   orders:[],
   images:{},
+  shippingRate:'',
+  keyword:'',
 };
 
 //selector
 export const getBasketTotal = (basket) => {
-  return basket?.reduce((amount, item) => item.price + amount, 0);
+  return basket?.reduce((amount, item) => Number(item.price) + amount, 0);
 };
 
 const reducer = (state, action) => {
@@ -79,6 +81,12 @@ const reducer = (state, action) => {
         menu: action.menu,
       };
 
+    case 'SET_KEYWORD':
+      return {
+        ...state,
+        keyword:action.keyword,
+      }
+
     case 'ADD_IMAGE':
       return {
         ...state,
@@ -95,6 +103,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         fullscreen:action.fullscreen,
+      }
+
+    case 'SET_SHIPPINGRATE':
+      return {
+        ...state,
+        shippingRate:action.shippingRate,
       }
 
     case 'EMPTY_BASKET':

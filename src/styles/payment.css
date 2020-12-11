@@ -3,28 +3,21 @@
   padding: 10px;
   font-weight: 400;
   background-color: rgb(234, 237, 237);
-  border-bottom: 1px solid lightgray;
+  margin-bottom:60px;
 }
 
 .payment__address__container {
-  margin-top: 20px;
+  margin:0 auto;
+  margin-top:10px;
   height: fit-content;
-  width: 90%;
-  padding: 10px;
+  width: 50%;
+  padding: 5px;
   justify-content: center;
   background-color: #fff9f4;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid lightgray;
-}
 
-.payment__address__container > h3 {
-  padding: 5px;
-}
-
-.payment__address__container > p {
-  padding: 3px;
 }
 
 .payment__container > h1 a {
@@ -55,6 +48,7 @@
 }
 .payment__title {
   flex: 0.3;
+  padding:10px;
 }
 
 .payment__address {
@@ -64,14 +58,14 @@
 .payment__details {
   flex: 0.7;
   margin: 0 auto;
+  display:flex;
+  flex-direction: column;
 }
 
-.payment__details > p {
-  align-self: flex-end;
-}
+
 
 .payment__cardElementContainer {
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
 }
 
@@ -79,18 +73,19 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  margin-top:20px;
 }
 
 .payment__paymentMethod {
   background-color: #fff9f4;
   display: flex;
-  padding: 20px;
   margin: 0 20px;
   border: 1px solid lightgray;
+  min-height:60vh;
 }
 
 .payment__priceContainer {
-  margin-top: auto;
+  margin-top: 20px;
   font-size: 22px;
 }
 
@@ -104,6 +99,21 @@
   border: 1px solid black;
 }
 
+.payment__stripeSecurity {
+  margin-top: 20px;
+  margin-left:20px;
+  height: fit-content;
+  width: 90%;
+  padding: 10px;
+  align-self:flex-end;
+  justify-content: center;
+  background-color: #fff9f4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid lightgray;
+}
+
 .payment__buyNowButton:disabled {
   opacity: 0.3;
 }
@@ -114,15 +124,19 @@
     }
 
     .payment__address__container {
-        margin-bottom:20px;
+        margin-bottom:10px;
     }
 
     .payment__cardElementContainer {
-        width:100%;
+        width:9 0%;
         margin-bottom:10px;
     }
 
     .payment__details {
         margin:0;
+    }
+    
+    .payment__stripeSecurity {
+      margin:0 auto;
     }
 }

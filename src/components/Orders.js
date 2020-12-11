@@ -12,9 +12,8 @@ function Orders() {
     useEffect(() => {
         if (user) {
                 db
-                .collection('users')
-                .doc(user?.uid)
                 .collection('orders')
+                .where("user", "==", user.uid)
                 .orderBy('created', 'desc')
                 .onSnapshot(snapshot => {
                     setOrders(snapshot.docs.map(doc => ({
@@ -29,7 +28,7 @@ function Orders() {
             } else {
                 setOrders([])
             } 
-            }, [user])
+            }, [])
     
     return (
         <div className='orders'>
