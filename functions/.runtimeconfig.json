@@ -1,8 +1,0 @@
-{
-  "easyship": {
-    "secret": "sand_tIQuKxpfLAXCREc2fGRySRtZlO6vKICGTQ2rK7X6skg="
-  },
-  "stripe": {
-    "secret": "sk_test_51Hsjo8CiY9aT1d2SDwN3XBeQVaT2eYTkovxLQdAfy546rJRJBNBGyxHTnPhhcYdjh1tR4aYgvCVsMlvvJ0RGJQXQ009ZlRmqRI"
-  }
-}
