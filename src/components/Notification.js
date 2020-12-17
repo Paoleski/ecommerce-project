@@ -1,9 +1,6 @@
-import React from 'react';
 import {
-  NotificationContainer,
-  NotificationManager,
+  NotificationManager
 } from 'react-notifications';
-import { useHistory } from 'react-router-dom';
 // import 'react-notifications/lib/notifications.css';
 import '../styles/notification.css'
 

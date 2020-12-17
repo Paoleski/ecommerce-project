@@ -30,4 +30,4 @@ firebase.js
 .firebaserc
 
 .env
-.runtimeconfig.json
+functions/.runtimeconfig.json
