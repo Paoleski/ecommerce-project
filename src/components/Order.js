@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../styles/order.css';
 import moment from 'moment';
 import CheckoutProduct from './CheckoutProduct';
 import CurrencyFormat from 'react-currency-format';
-import { storage } from '../firebase';
+
 
 function Order({ order }) {
-  const [images, setImages] = useState('');
-
 
   return (
     <div className="order">

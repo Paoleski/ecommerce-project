@@ -3,12 +3,11 @@ const admin = require('firebase-admin');
 const express = require('express');
 const cors = require('cors');
 
-
+console.log(functions.config().stripe.secret)
+console.log(functions.config())
 
 const stripe = require('stripe')(functions.config().stripe.secret);
-const EASY_SHIP_TEST_TOKEN =
-  'sand_tIQuKxpfLAXCREc2fGRySRtZlO6vKICGTQ2rK7X6skg=';
-const easyship = require('easyship')(EASY_SHIP_TEST_TOKEN);
+const easyship = require('easyship')(functions.config().easyship.secret);
 
 //API
 

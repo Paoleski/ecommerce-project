@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/shipping.css';
-import { getBasketTotal } from './reducer';
 import { useStateValue } from './StateProvider';
 import { getRate } from '../utils/shippingAxios';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -11,57 +10,58 @@ const Shipping = () => {
   const [{ profile, user, basket }, dispatch] = useStateValue();
   const [rate, setRate] = useState(null);
   const [items, setItems] = useState([]);
+  const [shippingError, setShippingError] = useState(false);
   const [loaderIcon, setLoaderIcon] = useState('');
 
   const getShipmentObject = () => {
-    gettingItemsWeight();
     const shipmentObject = {
       origin_postal_code: '97035',
       origin_city: 'Portland',
       origin_state: 'OR',
       destination_city: profile.city,
-      destination_state: profile.state,
+      destination_state: profile.stateUF,
       destination_country_alpha2: 'US',
       destination_postal_code: profile.zipCode,
       taxes_duties_paid_by: 'Receiver',
       is_insured: false,
       apply_shipping_rules: false,
-      items: [
-        {
-          actual_weight: '12',
-          height: '12',
-          width: '12',
-          length: '12',
-          category: 'bags_luggages',
-          declared_currency: 'USD',
-          declared_customs_value: 100,
-        },
-      ],
+      items: items,
     };
+    console.log(shipmentObject);
 
     return shipmentObject;
   };
-  const gettingItemsWeight = () => {
-    basket.forEach((item) => {
-      const itemObj = {
-        actual_weight: item.weight,
-        height: item.height,
-        width: item.width,
-        length: item.length,
-        category: 'bags_luggages',
-        declared_currency: 'USD',
-        declared_customs_value: item.price,
-      };
-      setItems((prev) => [...prev, itemObj]);
-    });
-  };
+
+  useEffect(() => {
+    setItems([])
+    if (basket) {
+      basket.forEach((item) => {
+        const itemObj = {
+          actual_weight: item.weight,
+          height: item.height,
+          width: item.width,
+          length: item.length,
+          category: 'bags_luggages',
+          declared_currency: 'USD',
+          declared_customs_value: 10,
+        };
+        setItems((prev) => [...prev, itemObj]);
+      });
+    }
+  }, [basket]);
 
   const getRateOfObject = async () => {
     setLoaderIcon(
       <Loader type="ThreeDots" color="#ff914d" height={40} width={40} />
     );
+
     const response = await getRate(getShipmentObject());
-    setRate(response.rates);
+
+    if (response.rates.length > 0) {
+      setRate(response.rates);
+      return;
+    }
+    setShippingError(response.messages[0])
   };
 
   const selectRate = (event) => {
@@ -70,6 +70,7 @@ const Shipping = () => {
       shippingRate: event.target.value,
     });
   };
+
 
   return (
     <div className="shipping">
@@ -90,6 +91,7 @@ const Shipping = () => {
               );
             })
           : loaderIcon}
+          {shippingError && <p style={{padding:5}}>{shippingError}</p>}
       </div>
     </div>
   );

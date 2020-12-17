@@ -29,7 +29,7 @@ function CreateAccount() {
     street: yup.string().required('required'),
     zip: yup
       .string()
-      .matches(/^(?=(\D*\d){5}\D*$)/, 'must be a valid zip code'),
+      .matches(/^(?=(\D*\d){5}\D*$)/, 'must be a valid zip code(5 digits)'),
     city: yup.string().required('required'),
     state: yup
       .string()
@@ -43,7 +43,7 @@ function CreateAccount() {
   });
 
   const handleAccountCreation = (e) => {
-    console.log(e)
+    console.log(e);
     const profile = {
       fullName,
       email,
@@ -65,6 +65,14 @@ function CreateAccount() {
             profile: profile,
             basket: [],
           });
+          auth.currentUser
+            .sendEmailVerification({url:'http://localhost:3000/'}) //NEED TO CHANGE FOR PRODUCTION
+            .then(function () {
+              console.log('sent email')
+            })
+            .catch(function (error) {
+              console.log('could not send email')
+            });
         }
       })
       .then(() => {
@@ -91,8 +99,6 @@ function CreateAccount() {
       })
       .catch((error) => alert(error.message));
   };
-
-  console.log(errors);
 
   return (
     <div className="createAccount">

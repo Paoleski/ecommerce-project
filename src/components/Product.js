@@ -7,6 +7,7 @@ import { useStateValue } from './StateProvider';
 import AwesomeSlider from 'react-awesome-slider';
 import awesomeCss from '../styles/awesome.css';
 import { storage } from '../firebase';
+import { createNotification } from './Notification';
 
 // import customAwesome from '../styles/awesome.css'
 // import AwesomeSliderStyles from 'react-awesome-slider/src/styled/fold-out-animation/fold-out-animation.scss'
@@ -55,6 +56,7 @@ function Product({ id, title, image, price, rating, description, weight, height,
         },
         user: user,
       });
+      createNotification('info', title)
     } else {
       history.push('/login');
     }
@@ -63,7 +65,7 @@ function Product({ id, title, image, price, rating, description, weight, height,
   return (
     <div className="product">
       <div className="product__info">
-        <h3 style={{ marginTop:-5, marginBottom:10}}>{title}</h3>
+        <h3 style={{ marginTop:0, marginBottom:10}}>{title}</h3>
         <p>{description}</p>
         <p className="product__price">
           <small>$</small>
@@ -78,7 +80,7 @@ function Product({ id, title, image, price, rating, description, weight, height,
         </div>
       </div>
       <div className="product__image">
-        <AwesomeSlider cssModule={awesomeCss} bullets={false}>
+        <AwesomeSlider cssModule={awesomeCss} bullets={false} >
           {images &&
             images.map((image, index) => (
               <div key={index} onClick={handleIsOpen} data-src={image} />

@@ -16,6 +16,8 @@ import FullscreenImg from './components/FullscreenImg';
 import Shipping from './components/Shipping';
 import AdminPanel from './components/AdminPanel';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
+import EmailConfirmation from './components/EmailConfirmation';
 
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 function App() {
@@ -65,12 +67,17 @@ function App() {
 
   console.log(state)
 
+
   return (
     <Router>
       <div className="app">
+        <ScrollToTop/>
         <Switch>
           <Route path="/createaccount">
             <CreateAccount/>
+          </Route>
+          <Route path="/emailconfirmation">
+            <EmailConfirmation/>
           </Route>
           <Route path="/adminpanel">
             <Header/>

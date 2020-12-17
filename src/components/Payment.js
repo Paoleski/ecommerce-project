@@ -41,17 +41,23 @@ function Payment() {
     const { data: clientSecret } = await axios.post('/payments/create', {
       amount: (getBasketTotal(basket) + Number(shippingRate)) * 100,
     });
-
-    const paymentMethodReq = await stripe.createPaymentMethod({
+      const paymentMethodReq = await stripe.createPaymentMethod({
       type: 'card',
       card: elements.getElement(CardElement),
       billing_details: billingDetails,
-    });
+    }) 
 
+    console.log(paymentMethodReq)
+    
     const payload = await stripe.confirmCardPayment(clientSecret.clientSecret, {
       payment_method: paymentMethodReq.paymentMethod.id,
     });
-    console.log(paymentMethodReq)
+    console.log(payload)
+  
+    if (payload.error) {
+      alert(`${payload.error.message}`)
+      return window.location.reload()
+    }
 
     db
       .collection('orders')

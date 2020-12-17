@@ -1,0 +1,38 @@
+.emailConfirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fff9f4;
+  min-width: 100vw;
+}
+
+.emailConfirmation__logo {
+  object-fit: contain;
+  width: 200px;
+  height: 150px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.emailConfirmation__container {
+  width: 40%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 20px;
+}
+
+.emailConfirmation__container > button {
+  background-color: #ff914d;
+  padding: 5px;
+  width: 60%;
+  margin: 0 auto;
+  border: 1px solid #000000;
+  outline: none;
+  margin-top:5px;
+  margin-bottom:5px;
+}

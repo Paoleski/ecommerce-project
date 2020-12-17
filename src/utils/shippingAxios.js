@@ -1,13 +1,14 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:5001/ecommerce-project-f0c3b/us-central1/api'
+const baseUrl = 'https://us-central1-ecommerce-project-f0c3b.cloudfunctions.net/api'
 
 
-let token = 'bearer sand_tIQuKxpfLAXCREc2fGRySRtZlO6vKICGTQ2rK7X6skg='
+let token = `bearer ${process.env.REACT_APP_EASYSHIP_TEST_KEY}`
 
 const getRate = async (shipmentObject) => {
     const config = {
       headers: { Authorization : token },
     }
+    console.log('im here>>>', baseUrl)
     const response = await axios.post(`${baseUrl}/getrate`, shipmentObject, config)
     return response.data
 }

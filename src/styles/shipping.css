@@ -4,7 +4,7 @@
     width:60%;
     height:fit-content;
     background-color:#fff9f4;
-    margin:0 auto;
+    margin:10px auto;
     margin-bottom:50px;
     border:1px solid lightgray;
     padding:5px;
@@ -21,6 +21,7 @@
     width:80%;
     margin:0 auto;
     border:1px solid black;
+    outline:none;
  }
 
 .shipping__rates {

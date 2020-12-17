@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { db, functions, storage } from '../firebase';
+import { db, storage } from '../firebase';
 import '../styles/adminPanel.css';
 import { useStateValue } from './StateProvider';
 import { firestoreIdGenerator } from '../utils/firestoreIdGenerator';
@@ -113,6 +113,7 @@ function AdminPanel() {
   }
 
   console.log(orders);
+  console.log(user?.admin)
 
   return (
     <div className="adminPanel">

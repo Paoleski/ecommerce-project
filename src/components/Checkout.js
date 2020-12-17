@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { storage } from '../firebase';
+import React from 'react';
 import '../styles/checkout.css';
 import CheckoutProduct from './CheckoutProduct';
 import { useStateValue } from './StateProvider';
